@@ -19,6 +19,8 @@ $ docker pull shoyan/www-ci
 
 Also possible to use or from github to get
 
+```
 $ git clone https://github.com/shoyan/www-ci.git
 $ cd www-ci
 $ docker build -t shoyan/www-ci .
+```
