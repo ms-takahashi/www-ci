@@ -2,7 +2,7 @@
 
 Include the following.
 
-* PHP 5.6.21
+* PHP 5.6.24
 * composer
 * Ruby 2.3.1
 * bundler
