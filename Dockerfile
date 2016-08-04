@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER shoyan "yamasaki0406@gmail.com"
 
 ### PHP
-ENV PHP_VERSION 5.6.21
+ENV PHP_VERSION 5.6.24
 
 RUN apt-get update && \
     apt-get -y install curl \
@@ -36,12 +36,58 @@ RUN apt-get update && \
                         libmysqlclient-dev \
                         libgd-dev
 
-RUN curl -sL https://github.com/phpbrew/phpbrew/raw/master/phpbrew -o /usr/local/bin/phpbrew
-RUN chmod +x /usr/local/bin/phpbrew
-
-RUN echo "source ~/.phpbrew/bashrc\nphpbrew use ${PHP_VERSION}" >> ~/.bashrc
-RUN phpbrew init && phpbrew update --old && phpbrew install ${PHP_VERSION} +default +mysql +mb +iconv +opcache +sqlite +intl
-
+RUN curl -sL http://jp2.php.net/distributions/php-5.6.24.tar.gz -o php-5.6.24.tar.gz
+RUN tar zxf php-5.6.24.tar.gz && cd php-5.6.24 && \
+    ./configure '--enable-session' \
+                '--enable-short-tags' \
+                '--with-zlib=/usr' \
+                '--with-libdir=lib/x86_64-linux-gnu' \
+                '--with-mysql=mysqlnd' \
+                '--with-mysqli=mysqlnd' \
+                '--with-pdo-mysql=mysqlnd' \
+                '--with-mysql-sock=/var/run/mysqld/mysqld.sock' \
+                '--with-iconv' \
+                '--enable-opcache' \
+                '--with-sqlite3' \
+                '--with-pdo-sqlite' \
+                '--enable-intl' \
+                '--enable-libxml' \
+                '--enable-simplexml' \
+                '--enable-xml' \
+                '--enable-xmlreader' \
+                '--enable-xmlwriter' \
+                '--with-xsl' \
+                '--with-libxml-dir=/usr' \
+                '--enable-mbstring' \
+                '--enable-mbregex' \
+                '--enable-bcmath' \
+                '--with-bz2=/usr' \
+                '--enable-calendar' \
+                '--enable-cli' \
+                '--enable-ctype' \
+                '--enable-dom' \
+                '--enable-fileinfo' \
+                '--enable-filter' \
+                '--enable-shmop' \
+                '--enable-sysvsem' \
+                '--enable-sysvshm' \
+                '--enable-sysvmsg' \
+                '--enable-json' \
+                '--with-mhash' \
+                '--with-mcrypt=/usr' \
+                '--enable-pcntl' \
+                '--with-pcre-regex' \
+                '--with-pcre-dir=/usr' \
+                '--enable-pdo' \
+                '--enable-phar' \
+                '--enable-posix' \
+                '--with-readline=/usr' \
+                '--enable-sockets' \
+                '--enable-tokenizer' \
+                '--with-curl=/usr' \
+                '--with-openssl=/usr' \
+                '--enable-zip' && \
+    make && make install
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 ### Ruby
