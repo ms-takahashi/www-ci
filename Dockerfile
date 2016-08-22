@@ -1,6 +1,13 @@
 FROM ubuntu:14.04
 MAINTAINER shoyan "yamasaki0406@gmail.com"
 
+### use Asia/Tokyo as localtime ###
+RUN ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN locale-gen ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:en
+ENV LC_ALL ja_JP.UTF-8
+
 ### PHP
 ENV PHP_VERSION 5.6.24
 
