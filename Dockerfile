@@ -41,7 +41,8 @@ RUN apt-get update && \
                         libxpm-dev \
                         libfreetype6-dev \
                         libmysqlclient-dev \
-                        libgd-dev
+                        libgd-dev \
+                        wget
 
 RUN curl -sL http://jp2.php.net/distributions/php-5.6.24.tar.gz -o php-5.6.24.tar.gz
 RUN tar zxf php-5.6.24.tar.gz && cd php-5.6.24 && \
@@ -96,6 +97,25 @@ RUN tar zxf php-5.6.24.tar.gz && cd php-5.6.24 && \
                 '--enable-zip' && \
     make && make install
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+### Install idnkit
+RUN wget https://www.nic.ad.jp/ja/idn/idnkit/download/sources/idnkit-1.0-src.tar.gz
+RUN tar -zxf idnkit-1.0-src.tar.gz
+RUN cd idnkit-1.0-src && \
+    ./configure && \
+    make && \
+    make install
+
+ADD php-idnkit.patch /tmp/php-idnkit.patch
+RUN wget http://www.sera.desuyo.net/idnkit/php-idnkit-20031204.tar.gz
+RUN tar -zxf php-idnkit-20031204.tar.gz
+RUN cd idnkit && \
+    patch -lsp1 < /tmp/php-idnkit.patch && \
+    phpize && \
+    ./configure && \
+    make && \
+    make install && \
+    echo "extension=idnkit.so" >> /usr/local/lib/php.ini
 
 ### Ruby
 
