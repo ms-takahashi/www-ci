@@ -117,6 +117,9 @@ RUN cd idnkit && \
     make install && \
     echo "extension=idnkit.so" >> /usr/local/lib/php.ini
 
+### Install xdebug
+RUN pecl install xdebug && echo 'extension=xdebug.so' >> /usr/local/lib/php.ini
+
 ### Ruby
 
 ENV PATH /usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH
