@@ -118,7 +118,7 @@ RUN cd idnkit && \
     echo "extension=idnkit.so" >> /usr/local/lib/php.ini
 
 ### Install xdebug
-RUN pecl install xdebug && echo 'extension=xdebug.so' >> /usr/local/lib/php.ini
+RUN pecl install xdebug && echo 'zend_extension=xdebug.so' >> /usr/local/lib/php.ini
 
 ### Ruby
 
