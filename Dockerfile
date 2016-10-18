@@ -120,6 +120,9 @@ RUN cd idnkit && \
 ### Install xdebug
 RUN pecl install xdebug && echo 'zend_extension=xdebug.so' >> /usr/local/lib/php.ini
 
+### Do not memory limit
+RUN echo 'memory_limit = -1' >> /usr/local/lib/php.ini
+
 ### Ruby
 
 ENV PATH /usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH
