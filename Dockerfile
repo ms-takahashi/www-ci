@@ -42,7 +42,8 @@ RUN apt-get update && \
                         libfreetype6-dev \
                         libmysqlclient-dev \
                         libgd-dev \
-                        wget
+                        wget \
+                        nkf
 
 RUN curl -sL http://jp2.php.net/distributions/php-5.6.24.tar.gz -o php-5.6.24.tar.gz
 RUN tar zxf php-5.6.24.tar.gz && cd php-5.6.24 && \
